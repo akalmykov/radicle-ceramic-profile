@@ -133,7 +133,7 @@ export async function getProfile(ownerAddress:string) : Promise<SafeOrgProfile> 
       url: "",
       image: {
         original: {
-          src: "ipfs://yourImageHash",
+          src: "ipfs://QmUzatQV61D6ZprTzXu8xgtkY8sGATP3pZRV2vHoKG4fDt",
           mimeType: "image/svg",
           width: 1,
           height:1,
