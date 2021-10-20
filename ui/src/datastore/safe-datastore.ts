@@ -120,9 +120,11 @@ export async function saveProfile(profile: SafeOrgProfile) {
 
 export async function getProfile(ownerAddress:string) : Promise<SafeOrgProfile>  {
 
-  dataStore.didId = "did:safe:eip155:4:"+ownerAddress.toLowerCase()
+  const did = "did:safe:eip155:4:"+ownerAddress.toLowerCase()
+  console.log(did)
+
+  dataStore.didId = did
   window.dataStore = dataStore
-  console.log(dataStore.didId)
 
   const basicProfile = await dataStore.get('basicProfile')
 
@@ -159,7 +161,7 @@ export async function getProfile(ownerAddress:string) : Promise<SafeOrgProfile> 
         }
       }
     }
-    console.log(orgProfile)
+    // console.log(orgProfile)
     return orgProfile 
 
   }

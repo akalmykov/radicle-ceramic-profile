@@ -46,7 +46,7 @@
   //$: editMode = $ceramicAuthorized
   $: editMode = false
 
-  console.log(profilePromise)
+  // console.log(profilePromise)
     
   import { Button, Icon, TextInput } from "ui/DesignSystem";
   import { withLock } from "ui/src/screen";

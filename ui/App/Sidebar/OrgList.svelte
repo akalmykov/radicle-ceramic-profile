@@ -52,8 +52,8 @@
             $activeRouteStore.address === org.id}>
           <Avatar
             size="regular"
-            kind={org.registration?.avatar
-              ? { type: "orgImage", url: org.registration.avatar }
+            kind={org.profile?.image.original.src 
+              ? { type: "orgImage", url: "https://ipfs.io/ipfs/"+org.profile?.image.original.src.substring(7) }
               : { type: "orgEmoji", uniqueIdentifier: org.id }} />
         </SidebarItem>
       </Tooltip>
