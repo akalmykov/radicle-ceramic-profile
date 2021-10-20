@@ -38,6 +38,7 @@ import * as wallet from "ui/src/wallet";
 
 import AnchorProjectModal from "ui/App/OrgScreen/AnchorProjectModal.svelte";
 import ConfigureEnsModal from "ui/App/OrgScreen/ConfigureEnsModal.svelte";
+import { getProfile, SafeOrgProfile } from "./datastore/safe-datastore";
 
 export type { Org };
 
@@ -338,6 +339,7 @@ export const orgSidebarStore = svelteStore.writable<OrgSidebarStore>({
 });
 const fetchOrgsExecutor = mutexExecutor.create();
 const resolveOrgsExecutor = mutexExecutor.create();
+const profileOrgsExecutor = mutexExecutor.create();
 
 export async function fetchOrgs(): Promise<void> {
   const sortedOrgs = await fetchOrgsExecutor.run(async () => {
@@ -380,6 +382,21 @@ export async function fetchOrgs(): Promise<void> {
       );
     });
 
+    const resolvedOrgsWithProfiles = await profileOrgsExecutor.run(async () => {
+      return await Promise.all(
+        sortedOrgs.map(async org => {
+          const profile = await getProfile(
+            org.owner
+          );
+          if (profile) {
+            org.profile = profile;
+          }
+          return org;
+        })
+      );
+    });
+
+
     if (resolvedOrgs) {
       orgSidebarStore.set({ type: "resolved", orgs: resolvedOrgs });
     }
@@ -396,6 +413,7 @@ interface GnosisSafeOwner {
   address: string;
   members: Member[];
   threshold: number;
+  profile: SafeOrgProfile;
 }
 
 // Determines the owner of an org at the given address.
@@ -403,12 +421,13 @@ export async function getOwner(orgAddress: string): Promise<Owner> {
   const walletStore = svelteStore.get(wallet.store);
   const address = await Contract.getOwner(orgAddress, walletStore.provider);
   const ownerCode = await walletStore.provider.getCode(address);
+  const profile = await getProfile(address)
   // We’re not really checking that the address is the Gnosis Safe
   // contract. We’re just checking if it is _a_ contract.
   const isSafe = ownerCode !== "0x";
   if (isSafe) {
     const { members, threshold } = await fetchMembers(walletStore, address);
-    return { type: "gnosis-safe", address, members, threshold };
+    return { type: "gnosis-safe", address, members, threshold, profile };
   } else {
     return { type: "wallet", address };
   }

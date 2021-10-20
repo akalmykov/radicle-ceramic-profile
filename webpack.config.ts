@@ -58,7 +58,7 @@ function electronMain(_env: unknown, argv: Argv): webpack.Configuration {
     output: {
       path: path.resolve(__dirname, "native"),
     },
-    plugins: [licensePlugin()],
+    //plugins: [licensePlugin()],
     optimization: {
       minimize: false,
     },
@@ -102,6 +102,9 @@ function ui(_env: unknown, argv: Argv): webpack.Configuration {
         crypto: require.resolve("crypto-browserify"),
         stream: require.resolve("stream-browserify"),
         assert: require.resolve("assert"),
+        "https": require.resolve("https-browserify"),
+        "http": require.resolve("stream-http"),
+        "os": require.resolve("os-browserify/browser")
       },
       extensions: [".svelte", ".ts", ".js"],
       plugins: [
@@ -122,7 +125,7 @@ function ui(_env: unknown, argv: Argv): webpack.Configuration {
       path: path.resolve(__dirname, "public"),
     },
     plugins: [
-      licensePlugin(),
+      //licensePlugin(),
       new webpack.ProvidePlugin({
         Buffer: ["buffer", "Buffer"],
         process: "process",
@@ -133,7 +136,7 @@ function ui(_env: unknown, argv: Argv): webpack.Configuration {
           "Content-Security-Policy": {
             "http-equiv": "Content-Security-Policy",
             content: isProduction
-              ? "script-src 'self'"
+              ? "script-src 'self' 'unsafe-eval'"
               : "script-src 'self' 'unsafe-eval'",
           },
         },

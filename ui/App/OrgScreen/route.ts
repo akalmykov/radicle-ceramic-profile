@@ -4,6 +4,7 @@
 // with Radicle Linking Exception. For full terms see the included
 // LICENSE file.
 
+import type { SafeOrgProfile } from "ui/src/datastore/safe-datastore";
 import * as org from "ui/src/org";
 import * as ensResolver from "ui/src/org/ensResolver";
 import { unreachable } from "ui/src/unreachable";
@@ -13,7 +14,7 @@ export interface Params {
   view: View;
 }
 
-export type View = "projects" | "members";
+export type View = "projects" | "members" | "orgprofile";
 
 export type LoadedRoute = SingleSigLoaded | MultiSigLoaded;
 
@@ -28,6 +29,10 @@ export type MultiSigView =
       type: "members";
       threshold: number;
       members: org.Member[];
+    }
+  | {
+      type: "orgprofile";
+      gnosisSafeAddress123: string;
     };
 
 interface MultiSigLoaded {
@@ -38,6 +43,8 @@ interface MultiSigLoaded {
   view: MultiSigView;
   threshold: number;
   members: org.Member[];
+  profile: SafeOrgProfile;
+
 }
 
 interface SingleSigLoaded {
@@ -71,6 +78,8 @@ export async function load(params: Params): Promise<LoadedRoute> {
           gnosisSafeAddress: owner.address,
           members: owner.members,
           threshold: owner.threshold,
+          profile: owner.profile,
+
           view: {
             type: "projects",
             anchors,
@@ -86,12 +95,29 @@ export async function load(params: Params): Promise<LoadedRoute> {
           gnosisSafeAddress: owner.address,
           members: owner.members,
           threshold: owner.threshold,
+          profile: owner.profile,
+
           view: {
             type: "members",
             members: owner.members,
             threshold: owner.threshold,
           },
         };
+      }  else if (params.view === "orgprofile") {
+        return {
+          type: "multiSigOrg",
+          registration,
+          address: params.address,
+          gnosisSafeAddress: owner.address,
+          members: owner.members,
+          threshold: owner.threshold,
+          profile: owner.profile,
+          view: {
+            type: "orgprofile",
+            gnosisSafeAddress123: owner.address,
+          },
+        };
+
       } else {
         return unreachable(params.view);
       }

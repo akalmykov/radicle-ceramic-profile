@@ -12,6 +12,7 @@ import {
   dialog,
   clipboard,
   shell,
+  session,
 } from "electron";
 import fs from "fs";
 import path from "path";
@@ -25,6 +26,9 @@ import {
 } from "./ipc-types";
 import { parseRadicleUrl, throttled } from "./nativeCustomProtocolHandler";
 import type { Config } from "ui/src/config";
+
+
+
 
 const isDev = process.env.NODE_ENV === "development";
 const isWindows = process.platform === "win32";
@@ -139,7 +143,6 @@ class WindowManager {
     const query = qs.stringify({
       config: JSON.stringify(buildConfig()),
     });
-
     const htmlPath = path.resolve(__dirname, "..", "public", "index.html");
     window.loadURL(`file://${htmlPath}?${query}`);
 

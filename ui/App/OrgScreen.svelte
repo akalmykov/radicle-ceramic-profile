@@ -23,9 +23,15 @@
 
   import ProjectsTab from "ui/App/OrgScreen/Projects.svelte";
   import MembersTab from "ui/App/OrgScreen/Members.svelte";
+  import CeramicProfileTab from "ui/App/OrgScreen/CeramicProfileTab.svelte";
   import OrgHeader from "ui/App/OrgScreen/OrgHeader.svelte";
   import ProjectsMenu from "ui/App/OrgScreen/ProjectsMenu.svelte";
   import MembersMenu from "ui/App/OrgScreen/MembersMenu.svelte";
+
+  import type {SafeOrgProfile } from 'ui/src/datastore/safe-datastore';
+  import { ceramicAuthorized, ceramicAuth, getProfile } from 'ui/src/datastore/safe-datastore';
+  import Button from "ui/DesignSystem/Button.svelte";
+  import { withLock } from "ui/src/screen";
 
   export let activeTab: orgRoute.MultiSigView;
   export let gnosisSafeAddress: string;
@@ -33,6 +39,17 @@
   export let members: org.Member[];
   export let threshold: number;
   export let registration: Registration | undefined = undefined;
+  export let profile: SafeOrgProfile;
+  
+	// import { onMount } from 'svelte';
+  // let orgProfile: Promise<SafeOrgProfile | undefined>;
+
+  // onMount(async () => {    
+  //   console.log("getting profile for  " + gnosisSafeAddress)
+  //   orgProfile = getProfile(gnosisSafeAddress)
+  // })
+  $: editMode = $ceramicAuthorized
+
 
   const tabs = (address: string, active: orgRoute.MultiSigView) => {
     return [
@@ -53,6 +70,15 @@
           router.push({ type: "org", params: { view: "members", address } });
         },
       },
+      {
+        title: "Org Profile",
+        icon: Icon.Registered,
+        active: active.type === "orgprofile",      
+        onClick: () => {
+          router.push({ type: "org", params: { view: "orgprofile", address } });
+        },
+      },
+
     ];
   };
 
@@ -96,6 +122,7 @@
       slot="left"
       orgAddress={address}
       ownerAddress={gnosisSafeAddress}
+      orgProfile123={profile}
       {threshold} />
     <div slot="right" style="display: flex">
       <FollowToggle following disabled style="margin-right: 1rem;" />
@@ -118,12 +145,16 @@
             activeTab.anchors.pendingUnresolved.length !== 0} />
       {:else if activeTab.type === "members"}
         <MembersMenu {gnosisSafeAddress} />
+      {:else if activeTab.type === "orgprofile"}
+
+       <Button disabled={$ceramicAuthorized} icon={Icon.Key}  variant="transparent" on:click={() => {withLock( async() => ceramicAuth())}}>Authorize to edit</Button>
       {:else}
         {unreachable(activeTab)}
       {/if}
     </div>
   </ActionBar>
 
+  
   {#if activeTab.type === "projects"}
     <ProjectsTab
       isMultiSig={true}
@@ -134,6 +165,6 @@
   {:else if activeTab.type === "members"}
     <MembersTab members={activeTab.members} />
   {:else}
-    {unreachable(activeTab)}
+  <CeramicProfileTab profilePromise={profile} />
   {/if}
 </ScreenLayout>

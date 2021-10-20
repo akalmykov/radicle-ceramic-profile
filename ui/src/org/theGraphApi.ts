@@ -16,6 +16,7 @@ import * as error from "ui/src/error";
 import * as ethereum from "ui/src/ethereum";
 import * as wallet from "ui/src/wallet";
 import * as contract from "./contract";
+import type { SafeOrgProfile } from "../datastore/safe-datastore";
 
 function createApolloClient(uri: string): apolloCore.ApolloClient<unknown> {
   return new apolloCore.ApolloClient({
@@ -54,6 +55,7 @@ export interface Org {
   id: string;
   owner: string;
   registration?: Registration;
+  profile?: SafeOrgProfile;
   creator: string;
   timestamp: number;
 }

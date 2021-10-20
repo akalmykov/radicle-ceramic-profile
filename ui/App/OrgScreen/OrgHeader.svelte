@@ -16,11 +16,19 @@
 
   import * as ensResolver from "ui/src/org/ensResolver";
   import * as ipc from "ui/src/ipc";
+  import type { SafeOrgProfile } from "ui/src/datastore/safe-datastore";
 
   export let orgAddress: string;
   export let ownerAddress: string;
+  export let orgProfile123: SafeOrgProfile  | undefined = undefined;
   export let threshold: number | undefined = undefined;
   export let registration: ensResolver.Registration | undefined = undefined;
+
+  // let thisOrgProfile : SafeOrgProfile;
+	// import { onMount } from 'svelte';
+  // onMount(async () => {
+  //   thisOrgProfile = await orgProfile
+  // })
 
   $: name = registration?.domain.replace(`.${ensResolver.DOMAIN}`, "");
   $: websiteUrl = registration?.url;
@@ -60,13 +68,39 @@
 </style>
 
 <div style="display: flex">
-  <Avatar
+
+{#if registration?.avatar} 
+  
+<Avatar
+    style="margin-right: 2rem;"
+    size="huge"
+    kind={{ type: "orgImage", url: registration.avatar }} />
+
+  {:else} 
+    <!-- {#await orgProfile then value} -->
+      {#if orgProfile123?.image?.original?.src }
+        <Avatar
+          style="margin-right: 2rem;"
+          size="huge"
+          kind={{ type: "orgImage", url: "https://ipfs.io/ipfs/"+orgProfile123?.image?.original?.src.substring(7)}} />
+
+      {:else}
+         <Avatar
+             style="margin-right: 2rem;"
+             size="huge"
+             kind={{ type: "orgEmoji", uniqueIdentifier: orgAddress }} />
+     {/if}
+      
+    <!-- {/await} -->
+
+  {/if}
+  <!-- <Avatar
     style="margin-right: 2rem;"
     size="huge"
     kind={registration?.avatar
       ? { type: "orgImage", url: registration.avatar }
       : { type: "orgEmoji", uniqueIdentifier: orgAddress }} />
-
+ -->
   <div class="metadata">
     <Copyable
       name="org address"

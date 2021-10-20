@@ -30,6 +30,7 @@
   export let spellcheck: boolean = false;
   export let autofocus: boolean = false;
 
+
   let inputHeight: number;
 
   // Can't use normal `autofocus` attribute on the `inputElement`:
@@ -153,6 +154,7 @@
       {spellcheck}
       style={inputStyle} />
   </div>
+
 
   {#if showLeftItem}
     <div
