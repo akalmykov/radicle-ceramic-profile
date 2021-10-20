@@ -1,7 +1,5 @@
 # Upstream with Ceramic Org Profiles
 
-[![Build status][ba]][st]
-
 Upstream is a cross-platform desktop client for the radicle code collaboration
 protocol. This version has been modified to support Radicle profiles.
 
