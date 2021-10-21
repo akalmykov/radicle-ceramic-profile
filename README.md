@@ -7,8 +7,8 @@ protocol. This version has been modified to support Radicle profiles. Radicle re
 
 ## What's new:
 - Profiles with org name, description, url and logo. Profile are store in DataStore with the help of `@glaze/datastore`
-- View/Edit functionalit with 3DID auth
-- Custom logos replace the default emojis
+- View/Edit functionalit with 3ID Auth (e.g. WalletConnect)
+- Custom logos replace the default emojis. Logos are expected to hosted on IPFS
 
 ## Technical notes:
 
@@ -17,7 +17,9 @@ There are several tehcnical issues worth mentioning
 - DataStore uses DID attached to the Ceramic instance. To change this, we patched DataStore. This allowed us to save read and write with did:safe.
 - For some reason, Clay testnet didn't work well with Safe DIDs. We run our own Ceramic node of a newer version.
 
+## Future work:
 
+We would love to see how Ceramic can help Radicle grow into a fully decentralized GitHub, with Issue tracker, Wiki, etc.
 
 ## Building and running Upstream
 
