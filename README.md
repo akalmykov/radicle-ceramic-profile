@@ -3,6 +3,8 @@
 Upstream is a cross-platform desktop client for the radicle code collaboration
 protocol. This version has been modified to support Radicle profiles.
 
+Radicle repository: rad:git:hnrkjjc1hti1sw3oq9sdtndr8fa9asqecopfy
+
 ## Building and running Upstream
 
 Prerequisites
