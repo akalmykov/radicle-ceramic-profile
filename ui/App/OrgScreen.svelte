@@ -147,7 +147,7 @@
         <MembersMenu {gnosisSafeAddress} />
       {:else if activeTab.type === "orgprofile"}
 
-       <Button disabled={$ceramicAuthorized} icon={Icon.Key}  variant="transparent" on:click={() => {withLock( async() => ceramicAuth())}}>Authorize to edit</Button>
+       <Button disabled={$ceramicAuthorized} icon={Icon.Key}  variant="transparent" on:click={() => ceramicAuth()}>Authorize to edit</Button>
       {:else}
         {unreachable(activeTab)}
       {/if}
