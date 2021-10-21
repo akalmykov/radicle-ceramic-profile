@@ -17,6 +17,8 @@ There are several tehcnical issues worth mentioning
 - DataStore uses DID attached to the Ceramic instance. To change this, we patched DataStore. This allowed us to save read and write with did:safe.
 - For some reason, Clay testnet didn't work well with Safe DIDs. We run our own Ceramic node of a newer version.
 
+[A short presentation can be found here](https://docs.google.com/presentation/d/1GRl3e_hhJJIGdLlrvQc8KfXXvu4ZxVUy7KO_SM2hZWU)
+
 ## Future work:
 
 We would love to see how Ceramic can help Radicle grow into a fully decentralized GitHub, with Issue tracker, Wiki, etc.
