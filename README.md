@@ -6,7 +6,7 @@ protocol. This version has been modified to support Radicle profiles. Radicle re
 ![image](https://user-images.githubusercontent.com/4420479/138189305-cd1fd807-e933-4efc-9b7f-11aa9c57a84c.png)
 
 ## What's new:
-- Profiles with org name, description, url and logo. Profiles are stored in DataStore with the help of `@glaze/datastore`, [https://developers.ceramic.network/streamtypes/tile-document/schemas/basic-profile/](BasicProfile) data model is used.
+- Profiles with org name, description, url and logo. Profiles are stored in DataStore with the help of `@glaze/datastore`, [BasicProfile](https://developers.ceramic.network/streamtypes/tile-document/schemas/basic-profile/) data model is used.
 - View/Edit functionalit with 3ID Auth (e.g. WalletConnect)
 - Custom logos replace the default emojis. Logos are expected to hosted on IPFS
 
