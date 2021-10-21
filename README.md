@@ -3,6 +3,14 @@
 Upstream is a cross-platform desktop client for the radicle code collaboration
 protocol. This version has been modified to support Radicle profiles.
 
+![image](https://user-images.githubusercontent.com/4420479/138189305-cd1fd807-e933-4efc-9b7f-11aa9c57a84c.png)
+
+What's new:
+- Profiles with org name, description, url and logo. Profile are store in DataStore with the help of `@glaze/datastore`
+- View/Edit functionalit with 3DID auth
+- Custom logos replace the default emojis
+
+
 Radicle repository: rad:git:hnrkjjc1hti1sw3oq9sdtndr8fa9asqecopfy
 
 ## Building and running Upstream
