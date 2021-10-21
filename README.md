@@ -1,17 +1,23 @@
 # Upstream with Ceramic Org Profiles
 
 Upstream is a cross-platform desktop client for the radicle code collaboration
-protocol. This version has been modified to support Radicle profiles.
+protocol. This version has been modified to support Radicle profiles. Radicle repository is available at rad:git:hnrkjjc1hti1sw3oq9sdtndr8fa9asqecopfy
 
 ![image](https://user-images.githubusercontent.com/4420479/138189305-cd1fd807-e933-4efc-9b7f-11aa9c57a84c.png)
 
-What's new:
+## What's new:
 - Profiles with org name, description, url and logo. Profile are store in DataStore with the help of `@glaze/datastore`
 - View/Edit functionalit with 3DID auth
 - Custom logos replace the default emojis
 
+## Technical notes:
 
-Radicle repository: rad:git:hnrkjjc1hti1sw3oq9sdtndr8fa9asqecopfy
+There are several tehcnical issues worth mentioning
+
+- DataStore uses DID attached to the Ceramic instance. To change this, we patched DataStore. This allowed us to save read and write with did:safe.
+- For some reason, Clay testnet didn't work well with Safe DIDs. We run our own Ceramic node of a newer version.
+
+
 
 ## Building and running Upstream
 
