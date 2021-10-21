@@ -122,7 +122,7 @@
       slot="left"
       orgAddress={address}
       ownerAddress={gnosisSafeAddress}
-      orgProfile123={profile}
+      orgProfile={profile}
       {threshold} />
     <div slot="right" style="display: flex">
       <FollowToggle following disabled style="margin-right: 1rem;" />

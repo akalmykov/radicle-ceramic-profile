@@ -13,7 +13,10 @@ import ThreeIdResolver from '@ceramicnetwork/3id-did-resolver'
 import KeyDidResolver from 'key-did-resolver'
 import type { ResolverRegistry } from 'did-resolver'
 
+import { writable } from 'svelte/store';
+import { info, NotificationParams } from '../notification';
 
+// For debug and experiments
 declare global {
   interface Window {
     ceramic?: CeramicClient,
@@ -21,25 +24,25 @@ declare global {
   }
 }
 
+export type SafeOrgProfile = {
+  name: string
+  description: string
+  url: string
+  image: {
+    original: {
+      src: string;
+      mimeType: string;
+      width: number;
+      height: number;
+    }
+  }
+}
+
+export const ceramicAuthorized = writable(false)
+
 const API_URL = "http://185.251.89.229:7007"
 const ceramic = new CeramicClient(API_URL)
-window.ceramic = ceramic
-
-export type SafeOrgProfile = {
-    name: string
-    description: string
-    url: string
-    image: {
-      original: {
-        src: string;
-        mimeType: string;
-        width: number;
-        height: number;
-      }
-    }
-}
-  
-
+window.ceramic = ceramic // TODO remove in production
 
 // @ts-ignore
 export const threeID = new ThreeIdConnect()
@@ -67,10 +70,27 @@ export const web3Modal = new Web3Modal({
   },
 })
 
+const publishedModel = {
+  schemas: {
+  basicProfileSchema: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
+},
+definitions: {
+  basicProfile: 'ceramic://kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
+},
+  tiles: {},
+}
 
-import { writable } from 'svelte/store';
-import { info, NotificationParams } from '../notification';
-export const ceramicAuthorized = writable(false)
+
+const model = new DataModel({ ceramic, model: publishedModel })
+const dataStore = new DIDDataStore({ ceramic, model })
+
+
+
+  
+
+
+
+
 
 export async function ceramicAuth() {
   const ethProvider = await web3Modal.connect()
@@ -99,20 +119,6 @@ export async function ceramicAuth() {
 
 }
 
-const publishedModel = {
-  schemas: {
-  basicProfileSchema: 'ceramic://k3y52l7qbv1frxt706gqfzmq6cbqdkptzk8uudaryhlkf6ly9vx21hqu4r6k1jqio',
-},
-definitions: {
-  basicProfile: 'ceramic://kjzl6cwe1jw145cjbeko9kil8g9bxszjhyde21ob8epxuxkaon1izyqsu8wgcic',
-},
-tiles: {},
-}
-
-
-const model = new DataModel({ ceramic, model: publishedModel })
-const dataStore = new DIDDataStore({ ceramic, model })
-
 export async function saveProfile(profile: SafeOrgProfile) {
   await dataStore.set("basicProfile", profile)
 }
@@ -123,8 +129,8 @@ export async function getProfile(ownerAddress:string) : Promise<SafeOrgProfile> 
   const did = "did:safe:eip155:4:"+ownerAddress.toLowerCase()
   console.log(did)
 
-  dataStore.didId = did
-  window.dataStore = dataStore
+  dataStore.didId = did // DataStore Patch
+  window.dataStore = dataStore // TODO remove in production
 
   const basicProfile = await dataStore.get('basicProfile')
 
@@ -161,13 +167,9 @@ export async function getProfile(ownerAddress:string) : Promise<SafeOrgProfile> 
         }
       }
     }
-    // console.log(orgProfile)
     return orgProfile 
 
   }
-
-  
-
     
 }
 

@@ -32,7 +32,7 @@ export type MultiSigView =
     }
   | {
       type: "orgprofile";
-      gnosisSafeAddress123: string;
+      gnosisSafeAddress: string;
     };
 
 interface MultiSigLoaded {
@@ -114,7 +114,7 @@ export async function load(params: Params): Promise<LoadedRoute> {
           profile: owner.profile,
           view: {
             type: "orgprofile",
-            gnosisSafeAddress123: owner.address,
+            gnosisSafeAddress: owner.address,
           },
         };
 

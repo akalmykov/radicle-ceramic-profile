@@ -20,7 +20,7 @@
 
   export let orgAddress: string;
   export let ownerAddress: string;
-  export let orgProfile123: SafeOrgProfile  | undefined = undefined;
+  export let orgProfile: SafeOrgProfile  | undefined = undefined;
   export let threshold: number | undefined = undefined;
   export let registration: ensResolver.Registration | undefined = undefined;
 
@@ -78,11 +78,11 @@
 
   {:else} 
     <!-- {#await orgProfile then value} -->
-      {#if orgProfile123?.image?.original?.src }
+      {#if orgProfile?.image?.original?.src }
         <Avatar
           style="margin-right: 2rem;"
           size="huge"
-          kind={{ type: "orgImage", url: "https://ipfs.io/ipfs/"+orgProfile123?.image?.original?.src.substring(7)}} />
+          kind={{ type: "orgImage", url: "https://ipfs.io/ipfs/"+orgProfile?.image?.original?.src.substring(7)}} />
 
       {:else}
          <Avatar

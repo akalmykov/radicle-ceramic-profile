@@ -1,52 +1,9 @@
-<!--
- Copyright © 2021 The Radicle Upstream Contributors
-
- This file is part of radicle../../src/datastore/safe-datastoreer the GPLv3
- with Radicle Linking Exception. For full terms see the included
- LICENSE file.
--->
-
 <script lang="ts">
-    // import type * as org from "ui/src/org";
-    // imp../../src/datastore/safe-datastore "ui/src/project";
-    // import * as userProfile from "ui/src/userProfile";
 
   import { ceramicAuthorized, saveProfile, SafeOrgProfile } from 'ui/src/datastore/safe-datastore'
   export let profilePromise: SafeOrgProfile
 
-  // let thisOrgProfile : SafeOrgProfile = {
-  //     name: "",
-  //     description: "",
-  //     url: "",
-  //     image: {
-  //       original: {
-  //         src: "ipfs://yourImageHash",
-  //         mimeType: "image/svg",
-  //         width: 1,
-  //         height:1,
-    
-  //       }
-  //     }
-  //   }
-    
-	// import { onMount } from 'svelte';
-
-  // if (profilePromise) {
-  //   thisOrgProfile = profilePromise
-  // }
-
-  // onMount(async () => {
-    
-  //   let loadedProfile = await profilePromise    
-  //   if (loadedProfile) {
-  //     thisOrgProfile = loadedProfile
-  //   }
-  // })
-
-  //$: editMode = $ceramicAuthorized
   $: editMode = false
-
-  // console.log(profilePromise)
     
   import { Button, Icon, TextInput } from "ui/DesignSystem";
   import { withLock } from "ui/src/screen";
@@ -99,9 +56,6 @@
     border-bottom: 0;
   }
 
-  /* .hover {
-    cursor: pointer;
-  } */
 
   .hover:hover {
     background-color: var(--color-foreground-level-1);
@@ -119,11 +73,9 @@
   </style>
   
   <div class="container">
-
     <div class="list-container" >
       <h3>Basic Profile</h3>
       <br/>
-
         <ul>
             <li class:hover={true}>
               <div class="list-item">
@@ -161,61 +113,51 @@
                   </div>
                 </div>
                 {#if editMode}
-                <div style="display: flex">
-                  <TextInput disabled={!editMode} style={inputWidth}
-                  bind:value={profilePromise.url}
-                  placeholder="Description"/>
+                    <div style="display: flex">
+                      <TextInput disabled={!editMode} style={inputWidth}
+                      bind:value={profilePromise.url}
+                      placeholder="Description"/>
                     </div>
-                    {:else}        
-                                
-<a class="typo-link" style={inputWidth} href={profilePromise?.url}>{profilePromise?.url}</a>
-
+                    {:else}
+                      <a class="typo-link" style={inputWidth} href={profilePromise?.url}>{profilePromise?.url}</a>
                     {/if}
               </div>
             </li>
-
-
         </ul>
-<br/>
+        <br/>
         <h3>Logo</h3>
         <br/>
-
         <ul>
-
-        <li class:hover={true}>
-          <div class="list-item">
-            <div style="display: flex">
-              <div style="display: flex;">
-                <p>Logo IPFS URL</p>
-              </div>
-            </div>
-            <div style="display: flex">
-              <TextInput disabled={!editMode} style={inputWidth}
-              bind:value={profilePromise.image.original.src}
-              placeholder="Image URL in IPFST format, e.g. ipfs://hash"/>
+          <li class:hover={true}>
+            <div class="list-item">
+              <div style="display: flex">
+                <div style="display: flex;">
+                  <p>Logo IPFS URL</p>
                 </div>
-          </div>
-        </li>
-
-        <li class:hover={true}>
-          <div class="list-item">
-            <div style="display: flex">
-              <div style="display: flex;">
-                <p>MIME type</p>
               </div>
+              <div style="display: flex">
+                <TextInput disabled={!editMode} style={inputWidth}
+                bind:value={profilePromise.image.original.src}
+                placeholder="Image URL in IPFST format, e.g. ipfs://hash"/>
+                  </div>
             </div>
-            <div style="display: flex">
-              <TextInput disabled={!editMode} style={inputWidth}
-              bind:value={profilePromise.image.original.mimeType}
-              placeholder="MIME type of the image "/>
+          </li>
+
+          <li class:hover={true}>
+            <div class="list-item">
+              <div style="display: flex">
+                <div style="display: flex;">
+                  <p>MIME type</p>
                 </div>
-          </div>
-        </li>
-
-    </ul>
-
-
-
+              </div>
+              <div style="display: flex">
+                <TextInput disabled={!editMode} style={inputWidth}
+                bind:value={profilePromise.image.original.mimeType}
+                placeholder="MIME type of the image "/>
+                  </div>
+            </div>
+          </li>
+        </ul>
         <br>
         {#if $ceramicAuthorized}
         {#if editMode}
@@ -235,8 +177,6 @@
         {/if}
         {/if}
     </div>
-
-
-    
-    </div>
+ 
+  </div>
   
