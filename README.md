@@ -1,27 +1,25 @@
-# Upstream
-
-[![Build status][ba]][st]
+# Upstream with Ceramic Org Profiles
 
 Upstream is a cross-platform desktop client for the radicle code collaboration
-protocol.
+protocol. This version has been modified to support Radicle profiles. Radicle repository is available at rad:git:hnrkjjc1hti1sw3oq9sdtndr8fa9asqecopfy
 
-At the moment we support Linux and macOS. Latest packages for these platforms
-are available on the [Radicle website][rw].
+![image](https://user-images.githubusercontent.com/4420479/138189305-cd1fd807-e933-4efc-9b7f-11aa9c57a84c.png)
 
-Windows support is considered experimental at this stage -- we don't provide
-packages for this platform, so you'll have to build it from source.
+## What's new:
+- Profiles with org name, description, url and logo. Profiles are stored in DataStore with the help of `@glaze/datastore`, [BasicProfile](https://developers.ceramic.network/streamtypes/tile-document/schemas/basic-profile/) data model is used.
+- View/Edit functionalit with 3ID Auth (e.g. WalletConnect)
+- Custom logos replace the default emojis. Logos are expected to hosted on IPFS
 
-The [UI][ui] is written in JavaScript using [Svelte][sv] and Electron and the
-node [proxy][pr] logic is implemented in [Rust][ru].
+## Technical notes:
 
-A good entry point for exploration is [`development.md`][de], where you'll find
-information on how to build Upstream from source.
+There are several tehcnical issues worth mentioning
 
-If you're looking to contribute, take a look at [`contributing.md`][co] to
-learn about the different ways that we accept contributions.
+- DataStore uses DID attached to the Ceramic instance. To change this, we patched DataStore. This allowed us to save read and write with did:safe.
+- For some reason, Clay testnet didn't work well with Safe DIDs. We run our own Ceramic node of a newer version.
 
-If you have questions or would like to get in touch, check out
-[radicle.community][rc].
+## Future work:
+
+We would love to see how Ceramic can help Radicle grow into a fully decentralized GitHub, with Issue tracker, Wiki, etc.
 
 ## Building and running Upstream
 
