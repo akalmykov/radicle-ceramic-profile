@@ -34,11 +34,20 @@ Prerequisites
 To build upstream run
 
 ```bash
-yarn run dist
+yarn install
+yarn dist
 ```
 
 This command will create an application package in the `./dist` folder which
 you can then run.
+
+Note: in case you see this misktake during the build process
+
+```Module not found: Error: Can't resolve 'near-api-js' in '/home/lexx/code/radicle-root/radicle-ceramic-profile/node_modules/@ceramicnetwork/blockchain-utils-linking/lib'```
+
+Install `near-api-js` package manually running:
+
+```yarn add near-api-js --dev```
 
 ### Attribution
 
