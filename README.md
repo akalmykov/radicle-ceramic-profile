@@ -41,7 +41,7 @@ yarn dist
 This command will create an application package in the `./dist` folder which
 you can then run.
 
-Note: in case you see this misktake during the build process
+Note: in case you see this error during the build process
 
 ```Module not found: Error: Can't resolve 'near-api-js' in '/home/lexx/code/radicle-root/radicle-ceramic-profile/node_modules/@ceramicnetwork/blockchain-utils-linking/lib'```
 
